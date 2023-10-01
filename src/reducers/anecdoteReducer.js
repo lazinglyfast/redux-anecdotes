@@ -11,6 +11,11 @@ const anecdoteReducer = (state, action) => {
       }
       return state.map(anecdote => anecdote.id == action.payload.id ? updatedAnecdote : anecdote)
     }
+    case "ORDER_ANECDOTES": {
+      const stateCopy = [...state]
+      stateCopy.sort((a, b) => b.votes - a.votes)
+      return stateCopy
+    }
     default:
       return []
   }

@@ -5,22 +5,26 @@ const NewAnecdote = () => {
   const generateId = () => anecdotes.reduce((a, max) => a.id > max ? a.id : max, 0)
 
   const dispatch = useDispatch()
-  const createAnecdote = (e) => {
-    e.preventDefault()
+  const createAnecdote = (title) => {
     const anecdoteToCreate = {
       id: generateId(),
-      title: e.target.title.value,
+      title,
       votes: 0,
     }
 
-    dispatch({
+    return {
       type: "NEW_ANECDOTE",
       payload: anecdoteToCreate,
-    })
+    }
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    dispatch(createAnecdote(e.target.title.value))
   }
 
   return (
-    <form onSubmit={createAnecdote}>
+    <form onSubmit={onSubmit}>
       <input type="text" name="title" />
       <button>create</button>
     </form>

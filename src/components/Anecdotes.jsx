@@ -14,11 +14,15 @@ const Anecdote = ({ anecdote, handleClick }) => {
 const Anecdotes = () => {
   const anecdotes = useSelector(store => store)
   const dispatch = useDispatch()
-  const handleClick = (anecdote) => {
-    dispatch({
+  const voteForAnecdote = (id) => {
+    return {
       type: "VOTE_FOR_ANECDOTE",
-      payload: { id: anecdote.id }
-    })
+      payload: { id }
+    }
+  }
+  const handleClick = (anecdote) => {
+    dispatch(voteForAnecdote(anecdote.id))
+    dispatch({ type: "ORDER_ANECDOTES" })
   }
   return anecdotes.map(anecdote => (
     <Anecdote
