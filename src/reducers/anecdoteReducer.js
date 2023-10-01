@@ -1,16 +1,7 @@
-const generateId = () => {
-  return 2
-}
-
 const anecdoteReducer = (state, action) => {
   switch (action.type) {
     case "NEW_ANECDOTE": {
-      const anecdote = {
-        ...action.payload,
-        id: generateId(),
-        votes: 0,
-      }
-      return [...state, anecdote]
+      return [...state, action.payload]
     }
     case "VOTE_FOR_ANECDOTE": {
       const anecnoteToUpdate = state.find(anecdote => anecdote.id == action.payload.id)

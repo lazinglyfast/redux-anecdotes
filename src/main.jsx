@@ -10,13 +10,15 @@ store.dispatch({
   type: "NEW_ANECDOTE",
   payload: {
     title: "new anecdote",
-  },
+    id: 0,
+    votes: 0,
+  }
 })
 
 store.dispatch({
   type: "VOTE_FOR_ANECDOTE",
   payload: {
-    id: 2,
+    id: 0,
   },
 })
 
