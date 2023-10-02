@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux"
+import { voteForAnecdote, orderAnecdotes } from "../reducers/anecdoteReducer"
 
 const Anecdote = ({ anecdote, handleClick }) => {
   const button = (
@@ -12,18 +13,18 @@ const Anecdote = ({ anecdote, handleClick }) => {
 }
 
 const Anecdotes = () => {
-  const anecdotes = useSelector(store => store)
+  const anecdotes = useSelector(store =>
+    console.log(store) || store.query
+      ? store.anecdotes.filter(a => a.title.includes(store.query))
+      : store.anecdotes)
+
   const dispatch = useDispatch()
-  const voteForAnecdote = (id) => {
-    return {
-      type: "VOTE_FOR_ANECDOTE",
-      payload: { id }
-    }
-  }
+
   const handleClick = (anecdote) => {
     dispatch(voteForAnecdote(anecdote.id))
-    dispatch({ type: "ORDER_ANECDOTES" })
+    dispatch(orderAnecdotes())
   }
+
   return anecdotes.map(anecdote => (
     <Anecdote
       key={anecdote.id}
