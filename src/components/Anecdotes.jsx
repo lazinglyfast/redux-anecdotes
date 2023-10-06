@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { voteForAnecdote, orderAnecdotes } from "../reducers/anecdoteReducer"
+import { setNotification, unsetNotification } from "../reducers/notificationReducer"
 
 const Anecdote = ({ anecdote, handleClick }) => {
   const button = (
@@ -14,7 +15,7 @@ const Anecdote = ({ anecdote, handleClick }) => {
 
 const Anecdotes = () => {
   const anecdotes = useSelector(store =>
-    console.log(store) || store.query
+    store.query
       ? store.anecdotes.filter(a => a.title.includes(store.query))
       : store.anecdotes)
 
@@ -22,6 +23,11 @@ const Anecdotes = () => {
 
   const handleClick = (anecdote) => {
     dispatch(voteForAnecdote(anecdote.id))
+    // wanted to have this inside notificationReducer.reducers.notify but couldn't
+    dispatch(setNotification(`voted for anecdote ${anecdote.title}`))
+    setTimeout(() => {
+      dispatch(unsetNotification())
+    }, 5000)
     dispatch(orderAnecdotes())
   }
 

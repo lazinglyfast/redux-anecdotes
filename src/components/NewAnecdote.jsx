@@ -1,17 +1,17 @@
 import { useDispatch } from "react-redux"
 import { createAnecdote } from "../reducers/anecdoteReducer"
-import { notify } from "../reducers/notificationReducer"
+import { setNotification, unsetNotification } from "../reducers/notificationReducer"
 
 const NewAnecdote = () => {
   const dispatch = useDispatch()
   const onSubmit = (e) => {
     e.preventDefault()
-    dispatch(createAnecdote(e.target.title.value))
-    dispatch(notify("created"))
-    // wanted to have this inside notificationReducer.reducers.notify but couldn't
+    const title = e.target.title.value
+    dispatch(createAnecdote(title))
+    dispatch(setNotification(`created anecdote ${title}`))
     setTimeout(() => {
-      dispatch(notify(""))
-    }, 3000)
+      dispatch(unsetNotification())
+    }, 5000)
   }
 
   return (
