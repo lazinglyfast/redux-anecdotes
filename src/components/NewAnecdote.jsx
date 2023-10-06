@@ -1,12 +1,11 @@
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import { createAnecdote } from "../reducers/anecdoteReducer"
 
 const NewAnecdote = () => {
-  const anecdotes = useSelector(state => state.anecdotes)
   const dispatch = useDispatch()
   const onSubmit = (e) => {
     e.preventDefault()
-    dispatch(createAnecdote(anecdotes, e.target.title.value))
+    dispatch(createAnecdote(e.target.title.value))
   }
 
   return (
