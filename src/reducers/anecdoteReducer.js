@@ -5,34 +5,34 @@ const generateId = () => Number((Math.random() * 1000000).toFixed(0))
 const initialState = [
   {
     id: 0,
-    title: "diogo friggo",
+    content: "diogo friggo",
     votes: 0,
   },
   {
     id: 1,
-    title: "diogo",
+    content: "diogo",
     votes: 1,
   },
   {
     id: 2,
-    title: "friggo",
+    content: "friggo",
     votes: 2,
   },
 ]
 
 const anecdoteSlice = createSlice({
   name: "anecdotes",
-  initialState,
+  initialState: [],
   reducers: {
     createAnecdote(state, action) {
-      const title = action.payload
+      const content = action.payload
       state.push({
         id: generateId(),
-        title,
+        content,
         votes: 0,
       })
     },
-    orderAnecdotes(state, _action) {
+    orderAnecdotes(state) {
       state.sort((a, b) => b.votes - a.votes)
     },
     voteForAnecdote(state, action) {
@@ -44,8 +44,11 @@ const anecdoteSlice = createSlice({
       }
       return state.map(a => a.id == id ? updatedAnecdote : a)
     },
+    setAnecdotes(_state, action) {
+      return action.payload
+    }
   },
 })
 
-export const { createAnecdote, orderAnecdotes, voteForAnecdote } = anecdoteSlice.actions
+export const { createAnecdote, orderAnecdotes, voteForAnecdote, setAnecdotes } = anecdoteSlice.actions
 export default anecdoteSlice.reducer

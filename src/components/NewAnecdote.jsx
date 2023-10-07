@@ -6,9 +6,9 @@ const NewAnecdote = () => {
   const dispatch = useDispatch()
   const onSubmit = (e) => {
     e.preventDefault()
-    const title = e.target.title.value
-    dispatch(createAnecdote(title))
-    dispatch(setNotification(`created anecdote ${title}`))
+    const content = e.target.content.value
+    dispatch(createAnecdote(content))
+    dispatch(setNotification(`created anecdote ${content}`))
     setTimeout(() => {
       dispatch(unsetNotification())
     }, 5000)
@@ -16,7 +16,7 @@ const NewAnecdote = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <input type="text" name="title" />
+      <input type="text" name="content" />
       <button>create</button>
     </form>
   )

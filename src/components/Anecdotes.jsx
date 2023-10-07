@@ -8,7 +8,7 @@ const Anecdote = ({ anecdote, handleClick }) => {
   )
   return (
     <div>
-      {anecdote.title} has {anecdote.votes} votes {button}
+      {anecdote.content} has {anecdote.votes} votes {button}
     </div>
   )
 }
@@ -16,7 +16,7 @@ const Anecdote = ({ anecdote, handleClick }) => {
 const Anecdotes = () => {
   const anecdotes = useSelector(store =>
     store.query
-      ? store.anecdotes.filter(a => a.title.includes(store.query))
+      ? store.anecdotes.filter(a => a.content.includes(store.query))
       : store.anecdotes)
 
   const dispatch = useDispatch()
@@ -24,7 +24,7 @@ const Anecdotes = () => {
   const handleClick = (anecdote) => {
     dispatch(voteForAnecdote(anecdote.id))
     // wanted to have this inside notificationReducer.reducers.notify but couldn't
-    dispatch(setNotification(`voted for anecdote ${anecdote.title}`))
+    dispatch(setNotification(`voted for anecdote ${anecdote.content}`))
     setTimeout(() => {
       dispatch(unsetNotification())
     }, 5000)
