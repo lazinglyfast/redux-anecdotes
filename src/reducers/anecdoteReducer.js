@@ -45,11 +45,17 @@ const anecdoteSlice = createSlice({
       }
       return state.map(a => a.id == id ? updatedAnecdote : a)
     },
+    updateAnecdote(state, action) {
+      const anecdote = action.payload
+      const i = state.findIndex(a => a.id === anecdote.id)
+      state[i] = anecdote
+    },
     setAnecdotes(_state, action) {
       return action.payload
     }
   },
 })
 
-export const { createAnecdote, orderAnecdotes, voteForAnecdote, setAnecdotes } = anecdoteSlice.actions
+export const { createAnecdote, orderAnecdotes, updateAnecdote, setAnecdotes } = anecdoteSlice.actions
+
 export default anecdoteSlice.reducer
