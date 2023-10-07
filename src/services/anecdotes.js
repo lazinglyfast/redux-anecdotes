@@ -3,7 +3,13 @@ import axios from "axios"
 const baseUrl = "http://localhost:3005/anecdotes"
 
 const getAll = async () => {
-  return await axios.get(baseUrl)
+  const response = await axios.get(baseUrl)
+  return response.data
 }
 
-export { getAll }
+const createNew = async (anecdote) => {
+  const response = await axios.post(baseUrl, anecdote)
+  return response.data
+}
+
+export default { getAll, createNew }
