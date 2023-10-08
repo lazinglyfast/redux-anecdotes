@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { voteForAnecdote, orderAnecdotes } from "../reducers/anecdoteReducer"
-import { setNotification, unsetNotification } from "../reducers/notificationReducer"
+import { notify } from "../reducers/notificationReducer"
 
 const Anecdote = ({ anecdote, handleClick }) => {
   const button = (
@@ -23,12 +23,7 @@ const Anecdotes = () => {
 
   const handleClick = async (anecdote) => {
     dispatch(voteForAnecdote(anecdote))
-
-    // wanted to have this inside notificationReducer.reducers.notify but couldn't
-    dispatch(setNotification(`voted for anecdote ${anecdote.content}`))
-    setTimeout(() => {
-      dispatch(unsetNotification())
-    }, 5000)
+    dispatch(notify(`voted for anecdote ${anecdote.content}`, 3))
     dispatch(orderAnecdotes())
   }
 
