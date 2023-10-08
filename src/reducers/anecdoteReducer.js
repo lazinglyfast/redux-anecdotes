@@ -51,18 +51,32 @@ const anecdoteSlice = createSlice({
       const i = state.findIndex(a => a.id === anecdote.id)
       state[i] = anecdote
     },
+    appendAnecdote(state, action) {
+      state.push(action.payload)
+    },
     setAnecdotes(_state, action) {
       return action.payload
     }
   },
 })
 
-export const { createAnecdote, orderAnecdotes, updateAnecdote, setAnecdotes } = anecdoteSlice.actions
+export const { createAnecdote, appendAnecdote, orderAnecdotes, updateAnecdote, setAnecdotes } = anecdoteSlice.actions
 
 export const initializeAnecdotes = () => {
   return async dispatch => {
     const anecdotes = await anecdotesService.getAll()
     dispatch(setAnecdotes(anecdotes))
+  }
+}
+
+export const newAnecdote = (content) => {
+  const anecdoteToCreate = {
+    content,
+    votes: 0,
+  }
+  return async dispatch => {
+    const createdAnecdote = await anecdotesService.createNew(anecdoteToCreate)
+    return dispatch(appendAnecdote(createdAnecdote))
   }
 }
 
