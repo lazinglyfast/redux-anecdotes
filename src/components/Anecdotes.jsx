@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
-import { updateAnecdote, orderAnecdotes } from "../reducers/anecdoteReducer"
+import { voteForAnecdote, orderAnecdotes } from "../reducers/anecdoteReducer"
 import { setNotification, unsetNotification } from "../reducers/notificationReducer"
-import anecdotesService from "../services/anecdotes"
 
 const Anecdote = ({ anecdote, handleClick }) => {
   const button = (
@@ -23,12 +22,7 @@ const Anecdotes = () => {
   const dispatch = useDispatch()
 
   const handleClick = async (anecdote) => {
-    const anecdoteToUpdate = {
-      ...anecdote,
-      votes: anecdote.votes + 1,
-    }
-    const updatedAnecdote = await anecdotesService.update(anecdoteToUpdate)
-    dispatch(updateAnecdote(updatedAnecdote))
+    dispatch(voteForAnecdote(anecdote))
 
     // wanted to have this inside notificationReducer.reducers.notify but couldn't
     dispatch(setNotification(`voted for anecdote ${anecdote.content}`))
