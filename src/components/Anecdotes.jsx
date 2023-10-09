@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { voteForAnecdote, orderAnecdotes } from "../reducers/anecdoteReducer"
-import { useNotificationDispatch, notify } from "../components/NotificationContext"
+import { notify } from "../reducers/notificationReducer"
 
 const Anecdote = ({ anecdote, handleClick }) => {
   const button = (
@@ -20,12 +20,10 @@ const Anecdotes = () => {
       : store.anecdotes)
 
   const dispatch = useDispatch()
-  const dispatchNotification = useNotificationDispatch()
 
   const handleClick = async (anecdote) => {
     dispatch(voteForAnecdote(anecdote))
-    const payload = `voted for anecdote ${anecdote.content}`
-    notify(dispatchNotification, payload)
+    dispatch(notify(`voted for anecdote ${anecdote.content}`, 3))
     dispatch(orderAnecdotes())
   }
 
